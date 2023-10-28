@@ -1,14 +1,18 @@
 import { Injectable } from '@angular/core';
-import { environment } from 'src/enviroments/enviroments';
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class IpThemeService {
+  private darkModeEnabled = false;
   constructor() { }
 
   setTheme() {
     const themeLink = document.querySelector('#theme-link');
+    const toggleBtn = document.querySelector("#toggle-btn");
+
+    console.log(toggleBtn?.textContent)
     if (themeLink) {
       themeLink.remove();
     }
@@ -18,12 +22,38 @@ export class IpThemeService {
     linkElement.rel = 'stylesheet';
 
     if (window.location.hostname === 'localhost') {
-      console.log(window.location.hostname)
-      linkElement.href = 'assets/light-theme.css'; // Set the theme for localhost
+      console.log("1")
+      if (this.darkModeEnabled) {
+        console.log("2")
+        linkElement.href = 'assets/dark-theme.css';
+
+      } else {
+        console.log("3")
+        linkElement.href = 'assets/light-theme.css';
+      }
+
     } else {
-      linkElement.href = 'assets/dark-theme.css'; // Set the theme for other IP addresses
+      if (window.location.hostname === "radwan503.github.io") {
+        linkElement.href = 'assets/dark-theme.css';
+      } else {
+        if (this.darkModeEnabled) {
+          console.log("5")
+          linkElement.href = 'assets/dark-theme.css';
+        } else {
+          console.log("6")
+          linkElement.href = 'assets/light-theme.css';
+        }
+      }
+
     }
 
     document.head.appendChild(linkElement);
+  }
+  toggleTheme() {
+    this.darkModeEnabled = !this.darkModeEnabled;
+    this.setTheme();
+  }
+  isDarkModeEnabled(): boolean {
+    return this.darkModeEnabled;
   }
 }
