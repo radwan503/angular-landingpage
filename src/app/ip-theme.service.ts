@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
+import { environment } from 'src/enviroments/enviroments';
 
 
 @Injectable({
   providedIn: 'root',
 })
 export class IpThemeService {
-  private darkModeEnabled = false;
+  private darkModeEnabled = environment.production == true ? true : false;
   constructor() { }
 
   setTheme() {
@@ -21,7 +22,7 @@ export class IpThemeService {
     linkElement.id = 'theme-link';
     linkElement.rel = 'stylesheet';
 
-    if (window.location.hostname === 'localhost') {
+    if (window.location.hostname === environment.hostname) {
       console.log("1")
       if (this.darkModeEnabled) {
         console.log("2")
@@ -33,18 +34,14 @@ export class IpThemeService {
       }
 
     } else {
-      if (window.location.hostname === "radwan503.github.io") {
+      if (this.darkModeEnabled) {
+        console.log("4")
         linkElement.href = 'assets/dark-theme.css';
-      } else {
-        if (this.darkModeEnabled) {
-          console.log("5")
-          linkElement.href = 'assets/dark-theme.css';
-        } else {
-          console.log("6")
-          linkElement.href = 'assets/light-theme.css';
-        }
-      }
 
+      } else {
+        console.log("5")
+        linkElement.href = 'assets/light-theme.css';
+      }
     }
 
     document.head.appendChild(linkElement);
