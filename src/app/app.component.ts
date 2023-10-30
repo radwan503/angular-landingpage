@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 import { IpThemeService } from './ip-theme.service';
 
 @Component({
@@ -10,8 +9,8 @@ import { IpThemeService } from './ip-theme.service';
 export class AppComponent {
   themeButtonText!: string;
   constructor(private ipThemeService: IpThemeService) { }
-  title = 'ecommerce';
-  faCartShopping = faCartShopping;
+  title = 'landing';
+
 
   ngOnInit() {
     this.ipThemeService.setTheme();
